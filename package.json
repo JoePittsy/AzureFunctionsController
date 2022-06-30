@@ -1,0 +1,26 @@
+{
+  "name": "functions-skeleton",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "prestart": "npm run build",
+    "start": "func start",
+    "test": "tsc && node node_modules/jasmine/bin/jasmine --config=jasmine.json"
+  },
+  "dependencies": {
+    "stub-azure-function-context": "^2.0.0-alpha.7"
+  },
+  "devDependencies": {
+    "@azure/functions": "^3.2.0",
+    "@types/jest": "^28.1.3",
+    "@types/jasmine": "^3.10.2",
+    "@types/node": "^18.0.0",
+    "jest": "^28.1.2",
+    "typescript": "^4.0.0",
+    "jasmine-console-reporter": "^3.1.0",
+    "jasmine-reporters": "^2.5.0",
+    "jasmine": "^3.10.0"
+  }
+}
