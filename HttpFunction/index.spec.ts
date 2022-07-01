@@ -7,13 +7,18 @@ import { mockedRequestFactory } from '../testing/FunctionRunner';
 describe('Example Test', () => {
     
     let mockService;
+    let mockAuthService
     let api: HTTPTest;
 
     beforeEach(() => {
         mockService = jasmine.createSpyObj('ExampleService', ['message']);
         mockService.message.and.returnValue('This is a message from the mocked service!');
+        
+        mockAuthService = jasmine.createSpyObj('AuthService', ['hasRole', 'hasPermission']);
+        mockAuthService.hasPermission.and.returnValue(true);
+        mockAuthService.hasRole.and.returnValue(true);
 
-        api = new HTTPTest(mockService);
+        api = new HTTPTest(mockService, mockAuthService);
 
     });
 
