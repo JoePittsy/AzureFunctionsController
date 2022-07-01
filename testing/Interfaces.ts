@@ -1,5 +1,7 @@
+import { HttpMethod } from "@azure/functions";
+
 export interface RequestParams { 
-    method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | "DELETE" | 'COPY' | 'HEAD' | 'OPTIONS' | 'LINK' | 'UNLINK' | 'PURGE' | 'LOCK' | 'UNLOCK' | 'PROPFIND' | 'VIEW';
+    method?: HttpMethod;
     url?: string;
     headers?: Record<string, string>;
     params?: Record<string, string>;

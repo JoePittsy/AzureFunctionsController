@@ -1,4 +1,4 @@
-import { Context, HttpRequest, HttpRequestHeaders } from "@azure/functions";
+import { Context, HttpMethod, HttpRequest, HttpRequestHeaders } from "@azure/functions";
 import { FunctionResponse, responseFactory } from "./ResponseFactory";
 
 
@@ -47,7 +47,6 @@ export async function validate(context: Context, req: HttpRequest, settings: Set
     if (settings.query) {const e = validator('query', settings); e ? errors.push(e) : null}
     if (settings.headers) {const e = validator('headers', settings); e ? errors.push(e) : null}
 
-    context.log("Errors: ", errors)
     if (errors.length === 0) return null;
     
     const errorMessages: string[] = [];

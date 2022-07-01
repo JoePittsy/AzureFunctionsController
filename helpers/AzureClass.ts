@@ -4,31 +4,6 @@ import { Settings, validate } from "./Validator";
 
 export class AzureClass {
 
-    excecutionOrder: AzureFunction[] = [
-        this.settingsValidation,
-        this.setup,
-        this.validation,
-        this.implementation
-    ]
-    
-    settings?: Settings;
-
-
-    /**
-     * In built settings validation. To use populate the
-     * settings paramater with required query & body paramaters 
-     * and required headers. 
-     * 
-     * @param context AzureFunction context object
-     * @param req HTTPRequest object
-     * @returns An error Function resoponse or null if no error
-     */
-    async settingsValidation (context: Context, req: HttpRequest): Promise<FunctionResponse | null> {
-        if (this.settings) {
-            return validate(context, req, this.settings)
-        }
-        return null;
-    }
 
     /**
      * Custom validation method that is ran before the implementation, 
@@ -51,20 +26,52 @@ export class AzureClass {
     async setup (context: Context, req: HttpRequest):  Promise<FunctionResponse | null> { return null }
    
     /**
-     * The implementation of the API logic, by default excecuted last.
+     * The implementation of the GET API logic, by default excecuted last.
      * * 
      * @param context AzureFunction context object
      * @param req HTTPRequest object
      * @returns A FunctionResponse
      */
-    async implementation (context: Context, req: HttpRequest):  Promise<FunctionResponse> { return }
+    async GETimplementation (context: Context, req: HttpRequest):  Promise<FunctionResponse> { return }
+    /**
+     * The implementation of the POST API logic, by default excecuted last.
+     * * 
+     * @param context AzureFunction context object
+     * @param req HTTPRequest object
+     * @returns A FunctionResponse
+     */
+    async POSTimplementation (context: Context, req: HttpRequest):  Promise<FunctionResponse> { return }
+    /**
+     * The implementation of the PATCH API logic, by default excecuted last.
+     * * 
+     * @param context AzureFunction context object
+     * @param req HTTPRequest object
+     * @returns A FunctionResponse
+     */
+    async PATCHimplementation (context: Context, req: HttpRequest):  Promise<FunctionResponse> { return }
+    /**
+     * The implementation of the DELETE API logic, by default excecuted last.
+     * * 
+     * @param context AzureFunction context object
+     * @param req HTTPRequest object
+     * @returns A FunctionResponse
+     */
+    async DELETEimplementation (context: Context, req: HttpRequest):  Promise<FunctionResponse> { return }
 
     build(): AzureFunction { 
         return async (context: Context, req: HttpRequest) => {
-            for (let i = 0; i < this.excecutionOrder.length; i++) {
-                const func = this.excecutionOrder[i];
-                const value = await func.bind(this)(context, req);
-                if (value) return context.res = value;                
+            let rval: FunctionResponse | null;
+            if (rval = await this.validation(context, req)) return context.res = rval;
+
+            switch (req.method) {
+                case 'GET':
+                    return context.res = await this.GETimplementation(context, req);
+                case 'POST':
+                    return context.res = await this.POSTimplementation(context, req);
+                case 'PATCH':
+                    return context.res = await this.PATCHimplementation(context, req);
+                case 'DELETE':
+                    return context.res = await this.DELETEimplementation(context, req);
             }
         }
     }
