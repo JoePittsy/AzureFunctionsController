@@ -1,6 +1,6 @@
 {
   "name": "azure-functions-controller",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Wrapper for AzureFunctions that allows for endpoints to be described in a way similar to C# AzureFunctions with decorators",
   "keywords": [
     "Azure",
