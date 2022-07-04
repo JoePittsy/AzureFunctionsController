@@ -1,4 +1,5 @@
-import { Settings, validate } from "./Validators";
+import { validate } from "./Helpers";
+import { Settings } from "./Interfaces";
 
 export const Validate = (settings: Settings) => ( target: Object, propertyKey: string, descriptor: PropertyDescriptor) => {
     const originalMethod = descriptor.value;

@@ -1,12 +1,11 @@
-import responseFactory, { FunctionResponse } from "../helpers/ResponseFactory";
 import { Context, HttpRequest } from "@azure/functions"
-import { ExampleService } from "../exampleServices/ExampleService";
-import { AzureClass } from "../helpers/AzureClass"
-import {Validate} from "../helpers/ValidateDecorator"
 import { MyAuthService } from "../exampleServices/ExampleAuthService";
-import { CheckAuth } from "../helpers/AuthDecorator";
-import { Endpoint } from "../helpers/EndpointDecorator"
-class HTTPTest extends AzureClass {
+import { ExampleService } from "../exampleServices/ExampleService";
+import { AzureFunctionsController } from "../../src/AzureFunctionsController";
+import { CheckAuth, Endpoint, responseFactory, Validate } from "../../src/helpers/Helpers";
+import { FunctionResponse } from "../../src/helpers/Interfaces";
+
+class HTTPTest extends AzureFunctionsController {
 
     myService: ExampleService;
     
@@ -21,9 +20,9 @@ class HTTPTest extends AzureClass {
         const responseMessage = "Hello, " + req.query.name + ". This HTTP triggered function executed successfully. Service Message: " + this.myService.message()
         return responseFactory(200, responseMessage);
     }
-
-    @Validate({body: ['name']})
+    
     @CheckAuth({role: ['admin']})
+    @Validate({body: ['name'], query: ['user']})
     @Endpoint({method: 'POST', route: 'test/wow'})
     async POST(context: Context, req: HttpRequest): Promise<FunctionResponse<string>> {
         const responseMessage = "Hello, " + req.body.name + ". This HTTP triggered function executed successfully. Service Message: " + this.myService.message()

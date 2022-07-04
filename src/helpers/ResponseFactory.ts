@@ -1,14 +1,4 @@
-export interface FunctionResponse<T> {
-    status: number
-    body: FunctionResponseBody<T>
-    headers: Record<string, string>
-}
-
-export interface FunctionResponseBody<T> {
-    success: boolean
-    message: string
-    data: T | undefined
-}
+import { FunctionResponse, FunctionResponseBody } from "./Interfaces";
 
 export function responseFactory<T>(httpCode: number, message: string, data?: any, cache = 0): FunctionResponse<T> {
     const body: FunctionResponseBody<T> = {

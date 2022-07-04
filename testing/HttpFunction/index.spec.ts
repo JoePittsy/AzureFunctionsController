@@ -1,7 +1,7 @@
 
-import { HTTPTest, run } from './index';
-import { FunctionResponseBody } from '../helpers/ResponseFactory';
-import { mockedRequestFactory } from '../testing/FunctionRunner';
+import { HTTPTest } from './index';
+import { mockedRequestFactory } from '../FunctionRunner';
+import { FunctionResponseBody } from '../../src/helpers/Interfaces';
 
 
 describe('Example Test', () => {
@@ -24,7 +24,7 @@ describe('Example Test', () => {
 
     it('Should work with a mocked service', async () => {
         const azureFunc = api.build();
-        const response = await mockedRequestFactory(azureFunc, {query: {'name': 'Joe'}});
+        const response = await mockedRequestFactory(azureFunc, {url: '/test/wow', query: {'name': 'Joe'}});
         const resBody = JSON.parse(response.body as unknown as string) as FunctionResponseBody<string>;
         expect(response.status).toEqual(200);
         expect(resBody.success).toEqual(true);
@@ -34,7 +34,7 @@ describe('Example Test', () => {
 
     it('Should work with a GET request', async () => {
         const azureFunc = api.build();
-        const response = await mockedRequestFactory(azureFunc, {method: 'GET', query: {'name': 'Joe'}});
+        const response = await mockedRequestFactory(azureFunc, {url: '/test/wow', method: 'GET', query: {'name': 'Joe'}});
         const resBody = JSON.parse(response.body as unknown as string) as FunctionResponseBody<string>;
         expect(response.status).toEqual(200);
         expect(resBody.success).toEqual(true);
@@ -44,7 +44,7 @@ describe('Example Test', () => {
 
     it('Should work with a POST request', async () => {
         const azureFunc = api.build();
-        const response = await mockedRequestFactory(azureFunc, {method: 'POST', body: {'name': 'Joe'}});
+        const response = await mockedRequestFactory(azureFunc, {url: '/test/wow', method: 'POST', body: {'name': 'Joe'}, query: {'user': 'Alex'}});
         const resBody = JSON.parse(response.body as unknown as string) as FunctionResponseBody<string>;
         expect(response.status).toEqual(200);
         expect(resBody.success).toEqual(true);

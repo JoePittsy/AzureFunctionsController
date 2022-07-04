@@ -1,17 +1,29 @@
 {
-  "name": "functions-skeleton",
+  "name": "azure-functions-controller",
   "version": "1.0.0",
-  "description": "",
+  "description": "Wrapper for AzureFunctions that allows for endpoints to be described in a way similar to C# AzureFunctions with decorators",
+  "keywords": ["Azure", "Azure Functions", "Azure Functions Controller"],
+  "author": {
+    "name": "Joe Pitts",
+    "email": "Joe@JoePitts.co.uk",
+    "url": "https://JoePitts.co.uk"
+  },
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
     "prestart": "npm run build",
     "start": "func start",
-    "test": "tsc && node node_modules/jasmine/bin/jasmine --config=jasmine.json"
+    "test": "tsc && node node_modules/jasmine/bin/jasmine --config=jasmine.json",
+    "prepare" : "npm run build",
+    "prepublishOnly" : "npm test"
+  },
+  "exports": {
+    ".": "./dist/src/AzureFunctionsController.js",
+    "./Helpers": "./dist/src/helpers/Helpers.js"
+    
   },
   "dependencies": {
-    "reflect-metadata": "^0.1.13",
-    "stub-azure-function-context": "^2.0.0-alpha.7"
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@azure/functions": "^3.2.0",
@@ -22,6 +34,7 @@
     "typescript": "^4.0.0",
     "jasmine-console-reporter": "^3.1.0",
     "jasmine-reporters": "^2.5.0",
-    "jasmine": "^3.10.0"
+    "jasmine": "^3.10.0",
+    "stub-azure-function-context": "^2.0.0-alpha.7"
   }
 }

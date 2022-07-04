@@ -1,36 +1,6 @@
-import { Context, HttpMethod, HttpRequest, HttpRequestHeaders } from "@azure/functions";
-import { AuthService } from "./AuthService";
-import { FunctionResponse, responseFactory } from "./ResponseFactory";
-
-
-export interface Settings {
-    headers?: string[] | null;
-    query?: string[] | null;
-    body?: string[] | null;
-}
-
-export interface AuthSettings { 
-    role?: string[],
-    permission?: string[]
-}
-
-interface ValidationError {
-    type: 'headers' | 'query' | 'body';
-    message: string;
-    expected: string[];
-    missing: string[];
-    all: string[];
-    request: HttpRequest;
-}
-
-export interface AuthValidationError {
-    type: 'permission' | 'role';
-    message: string;
-    expected: string[];
-    missing: string[];
-    request: HttpRequest;
-}
-
+import { AuthService, AuthSettings, AuthValidationError, FunctionResponse, Settings, ValidationError } from "./Interfaces";
+import { Context, HttpRequest } from "@azure/functions";
+import { responseFactory } from "./Helpers";
 
 export function validationErrorLog(context: Context, error: ValidationError | AuthValidationError) {
     context.log.error(JSON.stringify(error))

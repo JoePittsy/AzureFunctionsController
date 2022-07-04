@@ -1,11 +1,12 @@
 import { Context, HttpRequest } from "@azure/functions";
-import { AuthService } from "../helpers/AuthService";
-import { Validate } from "../helpers/ValidateDecorator";
+import { Validate } from "../../src/helpers/Helpers";
+import { AuthService } from "../../src/helpers/Interfaces";
 
 export class MyAuthService implements AuthService {
 
     @Validate({query: ['user']})
     async hasRole(context: Context, req: HttpRequest, role: string, ): Promise<boolean> {
+        context.log('CHECKING AUTGH')
         const user = req.query.user;
         if (user == 'Joe')  {
             switch (role) {

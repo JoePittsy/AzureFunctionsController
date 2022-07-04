@@ -1,7 +1,7 @@
 import { Context, HttpRequest } from "@azure/functions";
-import { AuthService } from "./AuthService";
+import { validationErrorLog } from "./Helpers";
+import { AuthService, AuthSettings, AuthValidationError } from "./Interfaces";
 import responseFactory from "./ResponseFactory";
-import { AuthSettings, AuthValidationError, validateAuth, validationErrorLog } from "./Validators";
 
 
 /**
