@@ -37,7 +37,7 @@ export function validationErrorLog(context: Context, error: ValidationError | Au
 }
 
 
-export async function validate(context: Context, req: HttpRequest, settings: Settings): Promise<FunctionResponse | null> {
+export async function validate(context: Context, req: HttpRequest, settings: Settings): Promise<FunctionResponse<null> | null> {
 
     const validator = (type: 'headers' | 'query' | 'body', settings: Settings) => {
         const all = req[type] ? Object.keys(req[type]) : [];
@@ -72,7 +72,7 @@ export async function validate(context: Context, req: HttpRequest, settings: Set
 }
 
 
-export async function validateAuth(context: Context, req: HttpRequest, settings: AuthSettings, authService: AuthService): Promise<FunctionResponse | null> {
+export async function validateAuth(context: Context, req: HttpRequest, settings: AuthSettings, authService: AuthService): Promise<FunctionResponse<null> | null> {
 
     const validator = async (type: 'permission' | 'role', settings: AuthSettings) => {
         const expected = settings[type];

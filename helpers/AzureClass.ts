@@ -1,8 +1,9 @@
-import { AzureFunction, Context, HttpRequest } from "@azure/functions";
+import { AzureFunction, Context, HttpMethod, HttpRequest } from "@azure/functions";
 import { AuthService } from "./AuthService";
-import { FunctionResponse } from "./ResponseFactory";
-export class AzureClass {
+import responseFactory, { FunctionResponse } from "./ResponseFactory";
 
+import "reflect-metadata";
+export class AzureClass {
 
     authService?: AuthService;
 
@@ -20,7 +21,7 @@ export class AzureClass {
      * @param req HTTPRequest object
      * @returns An error FunctionResponse or null if no error
     */
-    async preValidation (context: Context, req: HttpRequest):  Promise<FunctionResponse | null> { return null }
+    async preValidation(context: Context, req: HttpRequest): Promise<FunctionResponse<unknown> | null> { return null }
 
     /**
      * Custom validation method that is ran before the GET/POST/PATCH logic 
@@ -29,9 +30,9 @@ export class AzureClass {
      * @param req HTTPRequest object
      * @returns An error FunctionResponse or null if no error
      */
-    async validation (context: Context, req: HttpRequest):  Promise<FunctionResponse | null> { return null }
+    async validation(context: Context, req: HttpRequest): Promise<FunctionResponse<unknown> | null> { return null }
 
-    
+
     /**
      * Custom setup method that is ran after validation but before the GET/POST/PATCH logic 
      * 
@@ -39,70 +40,56 @@ export class AzureClass {
      * @param req HTTPRequest object
      * @returns An error FunctionResponse or null if no error
     */
-     async postValidation (context: Context, req: HttpRequest):  Promise<FunctionResponse | null> { return null }
+    async postValidation(context: Context, req: HttpRequest): Promise<FunctionResponse<unknown> | null> { return null }
+
 
     /**
-     * The implementation of the GET API logic, excecuted last.
-     * * 
-     * @param context AzureFunction context object
-     * @param req HTTPRequest object
-     * @returns A FunctionResponse
+     * Builds the Azure Function call this and export the returned function.
+     * 
+     * @returns An AzureFunction
      */
-    async GET (context: Context, req: HttpRequest):  Promise<FunctionResponse> { return }
-    /**
-     * The implementation of the POST API logic, excecuted last.
-     * * 
-     * @param context AzureFunction context object
-     * @param req HTTPRequest object
-     * @returns A FunctionResponse
-     */
-    async POST (context: Context, req: HttpRequest):  Promise<FunctionResponse> { return }
-    /**
-     * The implementation of the PATCH API logic, excecuted last.
-     * * 
-     * @param context AzureFunction context object
-     * @param req HTTPRequest object
-     * @returns A FunctionResponse
-     */
-    async PATCH (context: Context, req: HttpRequest):  Promise<FunctionResponse> { return }
-        /**
-     * The implementation of the PUT API logic,  excecuted last.
-     * * 
-     * @param context AzureFunction context object
-     * @param req HTTPRequest object
-     * @returns A FunctionResponse
-     */
-    async PUT (context: Context, req: HttpRequest):  Promise<FunctionResponse> { return }
-    /**
-     * The implementation of the DELETE API logic, excecuted last.
-     * * 
-     * @param context AzureFunction context object
-     * @param req HTTPRequest object
-     * @returns A FunctionResponse
-     */
-    async DELETE (context: Context, req: HttpRequest):  Promise<FunctionResponse> { return }
+    build(): AzureFunction {
 
-    build(): AzureFunction { 
+        let routes: Record<HttpMethod, Record<string, Function>> = {
+            'GET': {},
+            'POST': {},
+            'PATCH': {},
+            'DELETE': {},
+            'CONNECT': {},
+            'OPTIONS': {},
+            'PUT': {},
+            'TRACE': {},
+            'HEAD': {}
+        }
+
         return async (context: Context, req: HttpRequest) => {
-            let rval: FunctionResponse | null;
 
+            // Use relection to get a list of all the methods the user has implemented
+            const proto = Reflect.getPrototypeOf(this);
+            const methods = Object.getOwnPropertyNames(proto).filter(m => m !== 'constructor');
 
+            // For each of those check if the @Endpoint decorater was used by checking the reflected metadata
+            for (let i = 0; i < methods.length; i++) {
+                const methodName = methods[i];
+                const httpMethod = Reflect.getMetadata('tn:anotations:method', this, methodName);
+                const httpRoute = Reflect.getMetadata('tn:anotations:route', this, methodName);
+                if (httpMethod && httpRoute) routes[httpMethod][httpRoute] = proto[methodName].bind(this)
+            }
+
+            // Split on /api/ and take the later half then split on ? to seperate the query params out.
+            const route = req.url.split('/api/')[1].split('?')[0];
+            const method = req.method;
+            const endpoint = routes[method][route];
+            if (!endpoint) return context.res = responseFactory(404, `${method}: ${route} could not be resolved`);
+
+            // Run the preValidation, validation and postValidation functions
+            let rval: FunctionResponse<unknown> | null;
             if (rval = await this.preValidation(context, req)) return context.res = rval;
             if (rval = await this.validation(context, req)) return context.res = rval;
             if (rval = await this.postValidation(context, req)) return context.res = rval;
 
-            switch (req.method) {
-                case 'GET':
-                    return context.res = await this.GET(context, req);
-                case 'POST':
-                    return context.res = await this.POST(context, req);
-                case 'PATCH':
-                    return context.res = await this.PATCH(context, req);
-                case 'PUT':
-                    return context.res = await this.PUT(context, req);
-                case 'DELETE':
-                    return context.res = await this.DELETE(context, req);
-            }
+            // Finally run the function that matches the method & route
+            return context.res = await endpoint(context, req);
         }
     }
 }

@@ -4,7 +4,7 @@ import { FunctionResponse } from "../helpers/ResponseFactory";
 import { RequestParams } from "./Interfaces";
 
 
-export async function mockedRequestFactory(func: AzureFunction, {method = 'GET', url = '/', headers = {}, params = {}, body = {}, query = {} }: RequestParams): Promise<FunctionResponse> {
+export async function mockedRequestFactory(func: AzureFunction, {method = 'GET', url = '/', headers = {}, params = {}, body = {}, query = {} }: RequestParams): Promise<FunctionResponse<unknown>> {
     const data = await (runStubFunctionFromBindings(
         func, [{
             type: 'httpTrigger', name: 'req', direction: 'in', data: createHttpTrigger(method, url, headers, params, body, query),

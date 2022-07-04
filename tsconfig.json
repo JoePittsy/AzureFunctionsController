@@ -7,6 +7,7 @@
     "sourceMap": true,
     "strict": false,
     "skipLibCheck": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
 }

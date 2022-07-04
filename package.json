@@ -10,6 +10,7 @@
     "test": "tsc && node node_modules/jasmine/bin/jasmine --config=jasmine.json"
   },
   "dependencies": {
+    "reflect-metadata": "^0.1.13",
     "stub-azure-function-context": "^2.0.0-alpha.7"
   },
   "devDependencies": {

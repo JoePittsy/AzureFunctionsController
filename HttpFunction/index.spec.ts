@@ -25,7 +25,7 @@ describe('Example Test', () => {
     it('Should work with a mocked service', async () => {
         const azureFunc = api.build();
         const response = await mockedRequestFactory(azureFunc, {query: {'name': 'Joe'}});
-        const resBody = JSON.parse(response.body) as FunctionResponseBody;
+        const resBody = JSON.parse(response.body as unknown as string) as FunctionResponseBody<string>;
         expect(response.status).toEqual(200);
         expect(resBody.success).toEqual(true);
         expect(resBody.data).toEqual(undefined);
@@ -35,7 +35,7 @@ describe('Example Test', () => {
     it('Should work with a GET request', async () => {
         const azureFunc = api.build();
         const response = await mockedRequestFactory(azureFunc, {method: 'GET', query: {'name': 'Joe'}});
-        const resBody = JSON.parse(response.body) as FunctionResponseBody;
+        const resBody = JSON.parse(response.body as unknown as string) as FunctionResponseBody<string>;
         expect(response.status).toEqual(200);
         expect(resBody.success).toEqual(true);
         expect(resBody.data).toEqual(undefined);
@@ -45,7 +45,7 @@ describe('Example Test', () => {
     it('Should work with a POST request', async () => {
         const azureFunc = api.build();
         const response = await mockedRequestFactory(azureFunc, {method: 'POST', body: {'name': 'Joe'}});
-        const resBody = JSON.parse(response.body) as FunctionResponseBody;
+        const resBody = JSON.parse(response.body as unknown as string) as FunctionResponseBody<string>;
         expect(response.status).toEqual(200);
         expect(resBody.success).toEqual(true);
         expect(resBody.data).toEqual(undefined);

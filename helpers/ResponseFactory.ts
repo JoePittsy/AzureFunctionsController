@@ -1,17 +1,17 @@
-export interface FunctionResponse {
+export interface FunctionResponse<T> {
     status: number
-    body: string
+    body: FunctionResponseBody<T>
     headers: Record<string, string>
 }
 
-export interface FunctionResponseBody {
+export interface FunctionResponseBody<T> {
     success: boolean
     message: string
-    data: any | undefined
+    data: T | undefined
 }
 
-export function responseFactory(httpCode: number, message: string, data?: any, cache = 0): FunctionResponse {
-    const body: FunctionResponseBody = {
+export function responseFactory<T>(httpCode: number, message: string, data?: any, cache = 0): FunctionResponse<T> {
+    const body: FunctionResponseBody<T> = {
         success: (`${httpCode}`)[0] === '2',
         message,
         data,
@@ -27,6 +27,7 @@ export function responseFactory(httpCode: number, message: string, data?: any, c
 
     return {
         status: httpCode,
+        //@ts-ignore
         body: JSON.stringify(body),
         headers,
     };
