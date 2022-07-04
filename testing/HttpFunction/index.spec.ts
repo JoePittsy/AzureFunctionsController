@@ -1,7 +1,7 @@
 
 import { HTTPTest } from './index';
 import { mockedRequestFactory } from '../FunctionRunner';
-import { FunctionResponseBody } from '../../src/helpers/Interfaces';
+import { FunctionResponseBody } from '../../helpers/Interfaces';
 
 
 describe('Example Test', () => {

@@ -1,9 +1,9 @@
 import { Context, HttpRequest } from "@azure/functions"
 import { MyAuthService } from "../exampleServices/ExampleAuthService";
 import { ExampleService } from "../exampleServices/ExampleService";
-import { AzureFunctionsController } from "../../src/AzureFunctionsController";
-import { CheckAuth, Endpoint, responseFactory, Validate } from "../../src/helpers/Helpers";
-import { FunctionResponse } from "../../src/helpers/Interfaces";
+import { AzureFunctionsController } from "../..";
+import { CheckAuth, Endpoint, responseFactory, Validate } from "../../helpers";
+import { FunctionResponse } from "../../helpers/Interfaces";
 
 class HTTPTest extends AzureFunctionsController {
 

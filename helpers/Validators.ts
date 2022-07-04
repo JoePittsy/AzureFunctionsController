@@ -1,6 +1,6 @@
 import { AuthService, AuthSettings, AuthValidationError, FunctionResponse, Settings, ValidationError } from "./Interfaces";
 import { Context, HttpRequest } from "@azure/functions";
-import { responseFactory } from "./Helpers";
+import { responseFactory } from ".";
 
 export function validationErrorLog(context: Context, error: ValidationError | AuthValidationError) {
     context.log.error(JSON.stringify(error))

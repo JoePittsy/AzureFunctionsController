@@ -1,4 +1,4 @@
-import { validate } from "./Helpers";
+import { validate } from ".";
 import { Settings } from "./Interfaces";
 
 export const Validate = (settings: Settings) => ( target: Object, propertyKey: string, descriptor: PropertyDescriptor) => {

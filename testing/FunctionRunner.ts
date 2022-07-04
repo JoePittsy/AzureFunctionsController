@@ -1,6 +1,6 @@
 import { AzureFunction } from "@azure/functions";
 import { runStubFunctionFromBindings, createHttpTrigger } from 'stub-azure-function-context';
-import { FunctionResponse } from "../src/helpers/Interfaces";
+import { FunctionResponse } from "../helpers/Interfaces";
 import { RequestParams } from "./Interfaces";
 
 

@@ -1,6 +1,6 @@
 import { Context, HttpRequest } from "@azure/functions";
-import { Validate } from "../../src/helpers/Helpers";
-import { AuthService } from "../../src/helpers/Interfaces";
+import { Validate } from "../../helpers";
+import { AuthService } from "../../helpers/Interfaces";
 
 export class MyAuthService implements AuthService {
 

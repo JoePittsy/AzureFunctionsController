@@ -1,7 +1,7 @@
 import { AzureFunction, Context, HttpMethod, HttpRequest } from "@azure/functions";
 
 import "reflect-metadata";
-import { responseFactory } from "./helpers/Helpers";
+import { responseFactory } from "./helpers";
 import { AuthService, FunctionResponse } from "./helpers/Interfaces";
 export class AzureFunctionsController {
 

@@ -13,7 +13,8 @@
     "url": "https://JoePitts.co.uk"
   },
   "scripts": {
-    "build": "tsc",
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc",
     "watch": "tsc -w",
     "prestart": "npm run build",
     "start": "func start",
@@ -22,20 +23,20 @@
     "prepublishOnly": "npm test"
   },
   "files": [
-    "/dist/src"
+    "/dist"
   ],
   "exports": {
     ".": {
-      "import": "./dist/src/index.d.ts",
-      "require": "./dist/src/index.js"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     },
     "./Helpers": {
-      "import": "./dist/src/helpers/index.d.ts",
-      "require": "./dist/src/helpers/index.js"
+      "import": "./dist/helpers/index.js",
+      "types": "./dist/helpers/index.d.ts"
     },
     "./Interfaces": {
-      "import": "./dist/src/helpers/Interfaces.d.ts",
-      "require": "./dist/src/helpers/Interfaces.js"
+      "import": "./dist/helpers/Interfaces.js",
+      "types": "./dist/helpers/Interfaces.d.ts"
     }
   },
   "dependencies": {
@@ -51,6 +52,7 @@
     "jasmine-console-reporter": "^3.1.0",
     "jasmine-reporters": "^2.5.0",
     "jasmine": "^3.10.0",
-    "stub-azure-function-context": "^2.0.0-alpha.7"
+    "stub-azure-function-context": "^2.0.0-alpha.7",
+    "rimraf": "^3.0.2"
   }
 }
