@@ -26,12 +26,16 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/src/AzureFunctionsController.d.ts",
-      "require": "./dist/src/AzureFunctionsController.js"
+      "import": "./dist/src/index.d.ts",
+      "require": "./dist/src/index.js"
     },
     "./Helpers": {
-      "import": "./dist/src/helpers/Helpers.d.ts",
-      "require": "./dist/src/helpers/Helpers.js"
+      "import": "./dist/src/helpers/index.d.ts",
+      "require": "./dist/src/helpers/index.js"
+    },
+    "./Interfaces": {
+      "import": "./dist/src/helpers/Interfaces.d.ts",
+      "require": "./dist/src/helpers/Interfaces.js"
     }
   },
   "dependencies": {
