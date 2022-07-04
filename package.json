@@ -26,14 +26,7 @@
     "/dist"
   ],
   "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./dist": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
+    ".": "./dist",
     "./Helpers": {
       "import": "./dist/helpers/index.js",
       "types": "./dist/helpers/index.d.ts"
