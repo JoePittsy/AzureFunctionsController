@@ -21,6 +21,9 @@
     "prepare": "npm run build",
     "prepublishOnly": "npm test"
   },
+  "files": [
+    "/dist/src"
+  ],
   "exports": {
     ".": "./dist/src/AzureFunctionsController.js",
     "./Helpers": "./dist/src/helpers/Helpers.js"
