@@ -2,6 +2,8 @@
   "name": "azure-functions-controller",
   "version": "1.0.7",
   "description": "Wrapper for AzureFunctions that allows for endpoints to be described in a way similar to C# AzureFunctions with decorators",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "keywords": [
     "Azure",
     "Azure Functions",
@@ -25,17 +27,6 @@
   "files": [
     "/dist"
   ],
-  "exports": {
-    ".": "./dist",
-    "./Helpers": {
-      "import": "./dist/helpers/index.js",
-      "types": "./dist/helpers/index.d.ts"
-    },
-    "./Interfaces": {
-      "import": "./dist/helpers/Interfaces.js",
-      "types": "./dist/helpers/Interfaces.d.ts"
-    }
-  },
   "dependencies": {
     "reflect-metadata": "^0.1.13"
   },
