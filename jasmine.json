@@ -1,0 +1,10 @@
+{
+    "spec_dir": "./",
+    "spec_files": [
+        "dist/**/*.spec.js",
+        "!node_modules/**/*.ts"
+    ],
+    "helpers": ["testing/globals.ts"],
+    "stopSpecOnExpectationFailure": false,
+    "random": false
+}
