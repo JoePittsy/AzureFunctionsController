@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites disabled="0" errors="0" failures="0" tests="3" time="0.021">
- <testsuite name="Example Test" timestamp="2022-07-04T11:23:43" hostname="localhost" time="0.021" errors="0" tests="3" skipped="0" disabled="0" failures="0">
-  <testcase classname="Example Test" name="Should work with a mocked service" time="0.006" />
+<testsuites disabled="0" errors="0" failures="0" tests="3" time="0.023">
+ <testsuite name="Example Test" timestamp="2022-07-04T11:46:12" hostname="localhost" time="0.023" errors="0" tests="3" skipped="0" disabled="0" failures="0">
+  <testcase classname="Example Test" name="Should work with a mocked service" time="0.007" />
   <testcase classname="Example Test" name="Should work with a GET request" time="0.001" />
   <testcase classname="Example Test" name="Should work with a POST request" time="0.001" />
  </testsuite>
