@@ -11,4 +11,5 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
+  "exclude": ["dist"]
 }
